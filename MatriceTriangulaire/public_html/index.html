@@ -3,11 +3,11 @@
     <head>
         <title>MatriceTriangulaire</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/libs/three.js-r53/three.min.js"></script>
     </head>
     <body>
-        <script type="text/javascript" src="js/libs/three.js-r53/three.min.js"></script>
         <div>
-            <input type="button" value="Rotation caméra" onclick="RotationCam()">
+            <input type="button" value="Rotation caméra" onclick="RotationCam();">
         </div>
         <script>
              var camera, scene, renderer;
@@ -22,20 +22,20 @@
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera.position.z = 800;
-                camera.position.y = 500;
+		camera.position.z = 200;
+                camera.position.y = 100;
 		                
                 scene = new THREE.Scene();
                 
                 //Horizontal Grid
                 var lineH_material = new THREE.LineBasicMaterial( { color: 0x303030 } ),
                         geometry = new THREE.Geometry(),
-                        floor = 0, step = 25;
+                        floor = 0, step = 5;
                 for ( var i = 0; i <= 40; i ++ ) {
-                   geometry.vertices.push( new THREE.Vector3( - 500, floor, i * step - 500 ) );
-                    geometry.vertices.push( new THREE.Vector3(   500, floor, i * step - 500 ) );
-                    geometry.vertices.push( new THREE.Vector3( i * step - 500, floor, -500 ) );
-                    geometry.vertices.push( new THREE.Vector3( i * step - 500, floor,  500 ) );
+                   geometry.vertices.push( new THREE.Vector3( - 100, floor, i * step - 100 ) );
+                    geometry.vertices.push( new THREE.Vector3(   100, floor, i * step - 100 ) );
+                    geometry.vertices.push( new THREE.Vector3( i * step - 100, floor, -100 ) );
+                    geometry.vertices.push( new THREE.Vector3( i * step - 100, floor,  100 ) );
                 }
                 var line = new THREE.Line( geometry, lineH_material, THREE.LinePieces );
                 scene.add( line );
@@ -43,12 +43,12 @@
                 //Vertical Grid
                 var lineV_material = new THREE.LineBasicMaterial( { color: 0x303030 } ),
                         geometry = new THREE.Geometry(),
-                        floor = 0, step = 25;
+                        floor = 0, step = 5;
                 for ( var i = 0; i <= 40; i ++ ) {
-                    geometry.vertices.push( new THREE.Vector3( -500,  i * step , floor ) );
-                    geometry.vertices.push( new THREE.Vector3(500, i * step , floor   ) );
-                    geometry.vertices.push( new THREE.Vector3( i * step - 500, floor, 0 ) );
-                    geometry.vertices.push( new THREE.Vector3( i * step - 500, 1000, 0 ) );
+                    geometry.vertices.push( new THREE.Vector3( -100,  i * step , floor ) );
+                    geometry.vertices.push( new THREE.Vector3(100, i * step , floor   ) );
+                    geometry.vertices.push( new THREE.Vector3( i * step - 100, floor, 0 ) );
+                    geometry.vertices.push( new THREE.Vector3( i * step - 100, 200, 0 ) );
                 }
                 var line = new THREE.Line( geometry, lineV_material, THREE.LinePieces );
                 scene.add( line );
@@ -57,19 +57,19 @@
                 var triangle_material = new THREE.LineBasicMaterial( { color: 0x909090 } ),
                         geometry = new THREE.Geometry(),
                         floor = 0;
-                    geometry.vertices.push( new THREE.Vector3(-500, 0 , 0) );
-                    geometry.vertices.push( new THREE.Vector3( 500, 1000, 0 ) );
-                    geometry.vertices.push( new THREE.Vector3( 500, 1000, 0 ) );
-                    geometry.vertices.push( new THREE.Vector3(500, 0, 0 ) );
-                    geometry.vertices.push( new THREE.Vector3(500, 0, 0 ) );
-                    geometry.vertices.push( new THREE.Vector3(-500, 0, 0 ) );
+                    geometry.vertices.push( new THREE.Vector3(-100, 0 , 0) );
+                    geometry.vertices.push( new THREE.Vector3( 100, 200, 0 ) );
+                    geometry.vertices.push( new THREE.Vector3( 100, 200, 0 ) );
+                    geometry.vertices.push( new THREE.Vector3(100, 0, 0 ) );
+                    geometry.vertices.push( new THREE.Vector3(100, 0, 0 ) );
+                    geometry.vertices.push( new THREE.Vector3(-100, 0, 0 ) );
                     
                 var line = new THREE.Line( geometry, triangle_material, THREE.LinePieces );
                 scene.add( line );
                 
                 window.addEventListener( 'resize', onWindowResize, false );
                 rotation = false;
-                scene.position.y = 500;
+                scene.position.y = 100;
                 camera.lookAt( scene.position );
              }
              
@@ -83,8 +83,8 @@
                 requestAnimationFrame( animate );
                 if (rotation){
                     var timer = 0.0001 * Date.now();
-                    camera.position.x = Math.cos( timer ) * 500;
-                    camera.position.z = Math.sin( timer ) * 500;
+                    camera.position.x = Math.cos( timer ) * 200;
+                    camera.position.z = Math.sin( timer ) * 200;
                     camera.lookAt( scene.position );
                 }
                 renderer.render(scene, camera);
