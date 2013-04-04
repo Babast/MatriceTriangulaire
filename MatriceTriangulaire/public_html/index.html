@@ -22,31 +22,61 @@
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera.position.z = 400;
-
-		scene = new THREE.Scene();
+		camera.position.z = 800;
+                camera.position.y = 500;
+		                
+                scene = new THREE.Scene();
                 
                 //Horizontal Grid
-                var line_material = new THREE.LineBasicMaterial( { color: 0x303030 } ),
+                var lineH_material = new THREE.LineBasicMaterial( { color: 0x303030 } ),
                         geometry = new THREE.Geometry(),
-                        floor = -100, step = 25;
+                        floor = 0, step = 25;
                 for ( var i = 0; i <= 40; i ++ ) {
-                    geometry.vertices.push( new THREE.Vector3( - 500, floor, i * step - 500 ) );
+                   geometry.vertices.push( new THREE.Vector3( - 500, floor, i * step - 500 ) );
                     geometry.vertices.push( new THREE.Vector3(   500, floor, i * step - 500 ) );
                     geometry.vertices.push( new THREE.Vector3( i * step - 500, floor, -500 ) );
                     geometry.vertices.push( new THREE.Vector3( i * step - 500, floor,  500 ) );
                 }
-                var line = new THREE.Line( geometry, line_material, THREE.LinePieces );
+                var line = new THREE.Line( geometry, lineH_material, THREE.LinePieces );
+                scene.add( line );
+                
+                //Vertical Grid
+                var lineV_material = new THREE.LineBasicMaterial( { color: 0x303030 } ),
+                        geometry = new THREE.Geometry(),
+                        floor = 0, step = 25;
+                for ( var i = 0; i <= 40; i ++ ) {
+                    geometry.vertices.push( new THREE.Vector3( -500,  i * step , floor ) );
+                    geometry.vertices.push( new THREE.Vector3(500, i * step , floor   ) );
+                    geometry.vertices.push( new THREE.Vector3( i * step - 500, floor, 0 ) );
+                    geometry.vertices.push( new THREE.Vector3( i * step - 500, 1000, 0 ) );
+                }
+                var line = new THREE.Line( geometry, lineV_material, THREE.LinePieces );
+                scene.add( line );
+                
+                 //Triangle base
+                var triangle_material = new THREE.LineBasicMaterial( { color: 0x909090 } ),
+                        geometry = new THREE.Geometry(),
+                        floor = 0;
+                    geometry.vertices.push( new THREE.Vector3(-500, 0 , 0) );
+                    geometry.vertices.push( new THREE.Vector3( 500, 1000, 0 ) );
+                    geometry.vertices.push( new THREE.Vector3( 500, 1000, 0 ) );
+                    geometry.vertices.push( new THREE.Vector3(500, 0, 0 ) );
+                    geometry.vertices.push( new THREE.Vector3(500, 0, 0 ) );
+                    geometry.vertices.push( new THREE.Vector3(-500, 0, 0 ) );
+                    
+                var line = new THREE.Line( geometry, triangle_material, THREE.LinePieces );
                 scene.add( line );
                 
                 window.addEventListener( 'resize', onWindowResize, false );
-                rotation = true;
-
+                rotation = false;
+                scene.position.y = 500;
+                camera.lookAt( scene.position );
              }
+             
              function onWindowResize() {
                 camera.aspect = window.innerWidth / window.innerHeight;
 		camera.updateProjectionMatrix();
-		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.setSize( window.innerWidth-50, window.innerHeight-50 );
             }
             
             function animate() {
