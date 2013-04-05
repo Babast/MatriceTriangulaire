@@ -6,7 +6,7 @@
     </head>
     <body onkeyup="keyup(event);">
         <div>
-            Matrice triangulaire 3d avec HTML5 & Three.js <br/>
+            Matrice triangulaire 3d avec HTML5<br/>
             Touche "M" pour activer/désactiver les déplacements caméra<br/>
             Click gauche: Avancer - Click droit: Reculer
         </div>
@@ -30,12 +30,14 @@
 
 	camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
         camera.position.set( 0, 200, 500 );
+        
         controls = new THREE.FirstPersonControls( camera );
-        controls.movementSpeed = 30;
-        controls.lookSpeed = 0.2;
+        controls.movementSpeed = 60;
+        controls.lookSpeed = 0.5;
         
         scene = new THREE.Scene();
         scene.position.set( 0, 200, 0 );
+        
         camera.lookAt(scene.position);
         
         //Horizontal Grid
@@ -82,10 +84,10 @@
         texture.anisotropy = renderer.getMaxAnisotropy();
 	var material = new THREE.MeshBasicMaterial( { map: texture } );
 	mesh = new THREE.Mesh( geometry, material );
+        mesh.position.y = 100;
+        mesh.position.z = 100;
         scene.add( mesh );
         cubes.push( mesh );
-        
-        rotation = false;
 
         window.addEventListener( 'resize', onWindowResize, false );
 
@@ -98,15 +100,13 @@
     }
     
     function animate() {
-        requestAnimationFrame( animate );
+       requestAnimationFrame( animate );
         
        var timer = 0.0005 * Date.now();
-       cubes[0].position.x = Math.cos( timer ) * 50;
-       cubes[0].position.z = Math.sin( timer ) * 50;
-       cubes[0].position.y = Math.sin( timer ) * 50;
+       cubes[0].position.x = Math.cos( timer ) * 100;
        cubes[0].rotation.z = Math.sin( timer )*5;
-       cubes[0].rotation.y = Math.sin( timer )*5;
-        render();
+       cubes[0].rotation.y = Math.cos( timer )*5;
+       render();
     }
     
     function render() {
