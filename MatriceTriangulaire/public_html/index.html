@@ -49,13 +49,15 @@
             Matrice triangulaire 3D
         </header>
         <div id="info">
+            <p>
                 Click gauche: Avancer<br/>
                 Click droit: Reculer<br/>
                 Z: Monter<br/>
                 S: Descendre<br/>
                 Q: Gauche<br/>
                 D: Droite<br/>
-                F: Figer la caméra<br/>
+                F: Figer la caméra
+            </p>
         </div>
         <script type="text/javascript" src="js/libs/three.min.js"></script>      
         <script type="text/javascript" src="js/libs/FirstPersonControls.js"></script>
@@ -146,8 +148,8 @@
     function onWindowResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
-        controls.handleResize();
         renderer.setSize( window.innerWidth, window.innerHeight );
+        controls.handleResize();
     }
     
     function animate() {
@@ -164,6 +166,7 @@
         controls.update( clock.getDelta() );
         renderer.render( scene, camera );
     }
+    
         </script>
         <footer>
             Projet sur Github <a href="https://github.com/Babast/MatriceTriangulaire" target="blank">github.com/Babast/MatriceTriangulaire</a>    -   Mon CV en ligne <a href="http://www.sebastien-menanteau.com" target="blank">www.sebastien-menanteau.com</a>
