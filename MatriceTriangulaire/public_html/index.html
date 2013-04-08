@@ -42,12 +42,34 @@
                 left            : 0;
                 background-color: darkgrey;
             }
+            #holder { 
+                color           : #fff;
+                height          : 20px;
+                position        : fixed;
+                bottom          : 5px;
+                width           : 30%;
+                left            : 0;
+                background-color: background;
+                border          : 5px dashed #ccc; 
+                margin          : 20px auto;
+                background-size: 100%;
+            }
+            #player { 
+                position        : fixed;
+                bottom          : 5px;
+                left            : 40%;
+                margin          : 20px auto;
+            }
         </style>
     </head>
     <body>
         <header>
             Matrice triangulaire 3D
         </header>
+        <div id="holder">Drag mp3</div> 
+        <audio controls id="player">
+            <source src="" type="audio/mpeg">
+        </audio>
         <div id="info">
             <p>
                 Click gauche: Avancer<br/>
@@ -72,6 +94,26 @@
     animate();
     
     function init() {
+        // DragAndDrop
+        var holder = document.getElementById('holder');
+        holder.ondragover = function () { this.className = 'hover'; return false; };
+        holder.ondragend = function () { this.className = ''; return false; };
+        holder.ondrop = function (e) {
+            this.className = '';
+            e.preventDefault();
+
+            var file = e.dataTransfer.files[0],
+            reader = new FileReader();
+            reader.onload = function (event) {
+                console.log(event.target);
+                //holder.style.background = 'url(' + event.target.result + ')';           
+                document.getElementById("holder").innerHTML = file.name;
+                //document.getElementById("player").src = file;
+            };
+            reader.readAsDataURL(file);
+            return false;
+        }; 
+        
         renderer = new THREE.WebGLRenderer({ antialias: true, clearColor: 0x000000, clearAlpha: 1 });
         renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
@@ -168,6 +210,7 @@
     }
     
         </script>
+        
         <footer>
             Projet sur Github <a href="https://github.com/Babast/MatriceTriangulaire" target="blank">github.com/Babast/MatriceTriangulaire</a>    -   Mon CV en ligne <a href="http://www.sebastien-menanteau.com" target="blank">www.sebastien-menanteau.com</a>
         </footer>
