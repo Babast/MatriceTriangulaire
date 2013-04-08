@@ -1,14 +1,61 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>MatriceTriangulaire</title>
+        <title>MatriceTriangulaire3D</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            header {
+                height          : 20px;
+                position        : fixed;
+                top             : 0;
+                width           : 100%;
+                left            : 0;
+                background-color: darkgrey;
+                }
+            #info {
+                color           : #fff;
+                position        : absolute;
+                top             : 0px; 
+                width           : 100%;
+                padding         : 5px;
+                z-index         : 100;
+                text-align      : left;
+            }
+            #info a{
+                color           : #6699ff;
+            }
+            body {
+                background-color: #000000;
+                margin          : 0px;
+                overflow        : hidden;
+                font-family     : Arial;
+                font-size       : 13px;
+                text-align      : center;
+                font-weight     : bold;
+                text-align      : center;
+            }
+            footer {
+                height          : 20px;
+                position        : fixed;
+                bottom          : 0;
+                width           : 100%;
+                left            : 0;
+                background-color: darkgrey;
+            }
+        </style>
     </head>
-    <body onkeyup="keyup(event);">
-        <div>
-            Matrice triangulaire 3d avec HTML5<br/>
-            Touche "M" pour activer/désactiver les déplacements caméra<br/>
-            Click gauche: Avancer - Click droit: Reculer
+    <body>
+        <header>
+            Matrice triangulaire 3D
+        </header>
+        <div id="info">
+                Click gauche: Avancer<br/>
+                Click droit: Reculer<br/>
+                Z: Monter<br/>
+                S: Descendre<br/>
+                Q: Gauche<br/>
+                D: Droite<br/>
+                F: Figer la caméra<br/>
         </div>
         <script type="text/javascript" src="js/libs/three.min.js"></script>      
         <script type="text/javascript" src="js/libs/FirstPersonControls.js"></script>
@@ -17,7 +64,6 @@
     var container;
     var camera, scene, renderer, controls;  
     var clock = new THREE.Clock();
-    var moving = false;
     var cubes= [];
     
     init();
@@ -32,13 +78,17 @@
         camera.position.set( 0, 200, 500 );
         
         controls = new THREE.FirstPersonControls( camera );
-        controls.movementSpeed = 60;
-        controls.lookSpeed = 0.5;
+        controls.movementSpeed = 50;
+        controls.lookSpeed = 0.2;        
+      
         
         scene = new THREE.Scene();
         scene.position.set( 0, 200, 0 );
-        
         camera.lookAt(scene.position);
+
+        controls.target.x = scene.position.x ;
+        controls.target.y = scene.position.y ;
+        controls.target.z = scene.position.z ;
         
         //Horizontal Grid
         var lineH_material = new THREE.LineBasicMaterial( { color: 0x303030 } ),
@@ -96,6 +146,7 @@
     function onWindowResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
+        controls.handleResize();
         renderer.setSize( window.innerWidth, window.innerHeight );
     }
     
@@ -110,22 +161,12 @@
     }
     
     function render() {
-        if (moving){
-               controls.update( clock.getDelta() );
-            }
+        controls.update( clock.getDelta() );
         renderer.render( scene, camera );
     }
-    
-    function keyup(ev) {
-	if (ev.keyCode===77){ //M
-            if (moving){
-                moving = false;
-            }
-            else{
-                moving = true;
-            }
-	}
-    }
         </script>
+        <footer>
+            Projet sur Github <a href="https://github.com/Babast/MatriceTriangulaire" target="blank">github.com/Babast/MatriceTriangulaire</a>    -   Mon CV en ligne <a href="http://www.sebastien-menanteau.com" target="blank">www.sebastien-menanteau.com</a>
+        </footer>
     </body>
 </html>
