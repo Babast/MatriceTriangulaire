@@ -1,0 +1,62 @@
+header {
+    height          : 35px;
+    position        : fixed;
+    top             : 0;
+    width           : 100%;
+    left            : 0;
+    background-color: darkgrey;
+    text-align      : left;
+    padding-left    : 30px;
+    padding-top     : 8px;
+    font-size       : large;
+}
+#info {
+    font-size       : small;
+    color           : #fff;
+    position        : absolute;
+    top             : 25%;
+    padding         : 5px;
+    right           : 0;
+    text-align      : right;
+}
+body {
+    background-color: #000000;
+    margin          : 0px;
+    overflow        : hidden;
+    font-family     : Arial;
+    font-size       : 13px;
+    text-align      : center;
+    font-weight     : bold;
+    text-align      : center;
+}
+footer {
+    text-align      : left;
+    font-size       : small;
+    height          : auto;
+    position        : fixed;
+    bottom          : 0;
+    width           : 100%;
+    left            : 0;
+    background-color: darkgrey;
+}
+ul{
+    margin:  0;
+}
+#holder { 
+    color           : #8cbede;
+    font-size       : small;
+    height          : 20px;
+    position        : fixed;
+    top             : 50px;
+    width           : auto;
+    right           : 5px;
+    border          : 5px dashed #ccc;
+    margin          : 5px auto;
+    padding         : 10px;
+}
+#player { 
+    position        : fixed;
+    top             : 0px;
+    right           : 5px;
+    margin          : 5px auto;
+}
