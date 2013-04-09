@@ -35,13 +35,19 @@
                 text-align      : center;
             }
             footer {
-                height          : 20px;
+                text-align      : left;
+                font-size       : x-small;
+                height          : 40px;
                 position        : fixed;
                 bottom          : 0;
                 width           : 100%;
                 left            : 0;
                 background-color: darkgrey;
             }
+            ul{
+                margin:  0;
+            }
+            
             #holder { 
                 color           : #fff;
                 height          : 20px;
@@ -51,13 +57,13 @@
                 left            : 0;
                 background-color: background;
                 border          : 5px dashed #ccc; 
-                margin          : 20px auto;
+                margin          : 40px auto;
             }
             #player { 
                 position        : fixed;
                 bottom          : 5px;
                 left            : 40%;
-                margin          : 20px auto;
+                margin          : 40px auto;
             }
         </style>
     </head>
@@ -87,12 +93,12 @@
     var clock = new THREE.Clock();
     var cubes= [];
     
+    initDragDrop();
     init();
     animate();
     
-    function init() {
-        
-        // DragAndDrop
+    function initDragDrop(){
+         // DragAndDrop
         var holder = document.getElementById('holder');
         holder.ondragover = function () { 
             this.className = 'hover'; 
@@ -107,7 +113,8 @@
             e.preventDefault();
             var file = e.dataTransfer.files[0],
             reader = new FileReader(file);
-            reader.onload = function (event) {               
+            reader.onload = function (event) {
+                // Load music ds player
                 document.getElementById("holder").innerHTML = file.name;   
                 var player = document.getElementById("player");
                 var objectURL = window.URL.createObjectURL(file);
@@ -117,7 +124,9 @@
             reader.readAsDataURL(file);
             return false;
         }; 
-        
+    }
+    
+    function init() {
         // Scene
         renderer = new THREE.WebGLRenderer({ antialias: true, clearColor: 0x000000, clearAlpha: 1 });
         renderer.setSize( window.innerWidth, window.innerHeight );
@@ -216,9 +225,16 @@
     }
     
         </script>
-        
         <footer>
-            Projet sur Github <a href="https://github.com/Babast/MatriceTriangulaire" target="blank">github.com/Babast/MatriceTriangulaire</a>    -   Mon CV en ligne <a href="http://www.sebastien-menanteau.com" target="blank">www.sebastien-menanteau.com</a>
+            Projet sur Github (<a href="https://github.com/Babast/MatriceTriangulaire" target="blank">github.com/Babast/MatriceTriangulaire</a>)<br/> 
+            <ul>
+                   <li>
+                       Josselin Minier (Musicologue): <a href="http://jim.afim-asso.org/jim12/pdf/jim2012_39_p_minier.pdf" target="blank">La matrice triangulaire, une grille temporelle dynamique pour la composition, l'interpretation et l'analyse</a>
+                   </li>
+                   <li>
+                       Sébastien Menanteau (Développeur): <a href="http://www.sebastien-menanteau.com" target="blank">www.sebastien-menanteau.com</a>
+                   </li>
+               </ul>
         </footer>
     </body>
 </html>
