@@ -147,6 +147,17 @@
         var line = new THREE.Line( geometry, lineH_material, THREE.LinePieces );
         scene.add( line );
         
+        //Floor
+        var texture = THREE.ImageUtils.loadTexture( 'beton.jpg' );
+        texture.anisotropy = renderer.getMaxAnisotropy();
+        var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: true } );
+        var plane = new THREE.PlaneGeometry( 400, 400);
+        mesh = new THREE.Mesh( plane, material );
+        mesh.rotation.x =3.14;
+        mesh.position.y = 10;
+        scene.add( mesh );
+        
+                                
         //Vertical Grid
         var lineV_material = new THREE.LineBasicMaterial( { color: 0x303030 } ),
                 geometry = new THREE.Geometry(),
