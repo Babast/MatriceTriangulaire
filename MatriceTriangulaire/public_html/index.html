@@ -52,7 +52,6 @@
                 background-color: background;
                 border          : 5px dashed #ccc; 
                 margin          : 20px auto;
-                background-size: 100%;
             }
             #player { 
                 position        : fixed;
@@ -66,10 +65,8 @@
         <header>
             Matrice triangulaire 3D
         </header>
-        <div id="holder">Drag mp3</div> 
-        <audio controls id="player">
-            <source src="" type="audio/mpeg">
-        </audio>
+        <div id="holder">Drag and drop music here</div> 
+        <audio id="player" preload="auto" controls></audio>
         <div id="info">
             <p>
                 Click gauche: Avancer<br/>
@@ -94,26 +91,34 @@
     animate();
     
     function init() {
+        
         // DragAndDrop
         var holder = document.getElementById('holder');
-        holder.ondragover = function () { this.className = 'hover'; return false; };
-        holder.ondragend = function () { this.className = ''; return false; };
+        holder.ondragover = function () { 
+            this.className = 'hover'; 
+            return false; 
+        };
+        holder.ondragend = function () { 
+            this.className = ''; 
+            return false; 
+        };
         holder.ondrop = function (e) {
             this.className = '';
             e.preventDefault();
-
             var file = e.dataTransfer.files[0],
-            reader = new FileReader();
-            reader.onload = function (event) {
-                console.log(event.target);
-                //holder.style.background = 'url(' + event.target.result + ')';           
-                document.getElementById("holder").innerHTML = file.name;
-                //document.getElementById("player").src = file;
+            reader = new FileReader(file);
+            reader.onload = function (event) {               
+                document.getElementById("holder").innerHTML = file.name;   
+                var player = document.getElementById("player");
+                var objectURL = window.URL.createObjectURL(file);
+                player.src = objectURL;
+                player.load();
             };
             reader.readAsDataURL(file);
             return false;
         }; 
         
+        // Scene
         renderer = new THREE.WebGLRenderer({ antialias: true, clearColor: 0x000000, clearAlpha: 1 });
         renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
@@ -146,16 +151,6 @@
         }
         var line = new THREE.Line( geometry, lineH_material, THREE.LinePieces );
         scene.add( line );
-        
-        //Floor
-        var texture = THREE.ImageUtils.loadTexture( 'beton.jpg' );
-        texture.anisotropy = renderer.getMaxAnisotropy();
-        var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: true } );
-        var plane = new THREE.PlaneGeometry( 400, 400);
-        mesh = new THREE.Mesh( plane, material );
-        mesh.rotation.x =3.14;
-        mesh.position.y = 10;
-        scene.add( mesh );
         
                                 
         //Vertical Grid
