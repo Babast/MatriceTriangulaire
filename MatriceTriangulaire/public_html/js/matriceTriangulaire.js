@@ -2,11 +2,38 @@ var container;
 var camera, scene, renderer, controls;  
 var clock = new THREE.Clock();
 var cubes= [];
-
+var objectURL;
+var buffer;
 initDragDrop();
 init();
 animate();
-   
+
+
+function loadSample(url) {
+    var contextClass = (window.AudioContext || 
+  window.webkitAudioContext || 
+  window.mozAudioContext || 
+  window.oAudioContext || 
+  window.msAudioContext);
+if (contextClass) {
+  // Web Audio API is available.
+  var context = new contextClass();
+} else {
+  // Web Audio API is not available. Ask the user to use a supported browser.
+}
+   var request = new XMLHttpRequest();
+request.open('GET', url, true);
+request.responseType = 'arraybuffer';
+
+// Decode asynchronously
+request.onload = function() {
+  context.decodeAudioData(request.response, function(theBuffer) {
+    buffer = theBuffer;
+  });
+}
+request.send();
+}
+
 function initDragDrop(){
     // DragAndDrop
     var holder = document.getElementById('holder');
@@ -27,9 +54,10 @@ function initDragDrop(){
             // Load music ds player
             document.getElementById("holder").innerHTML = file.name;
             var player = document.getElementById("player");
-            var objectURL = window.URL.createObjectURL(file);
+            objectURL = window.URL.createObjectURL(file);
             player.src = objectURL;
             player.load();
+            loadSample(objectURL);
         };
         reader.readAsDataURL(file);
         return false;
@@ -107,6 +135,7 @@ function init() {
     scene.add( mesh );
     cubes.push( mesh );
 
+
     window.addEventListener( 'resize', onWindowResize, false );
 }
     
@@ -115,6 +144,7 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
     controls.handleResize();
+    alert(buffer.length);
 }
     
 function animate() {
